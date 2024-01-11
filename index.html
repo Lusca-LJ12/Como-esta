@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeiro Site</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #formulario {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        async function salvarNomeEEnviar() {
+            var nomeUsuario = document.getElementById("nome").value;
+
+            if (nomeUsuario.trim() === "") {
+                alert("Por favor, insira seu nome antes de prosseguir.");
+                return;
+            }
+
+            try {
+                // Obter dados existentes do JSON no repositório central
+                var response = await fetch('https://raw.githubusercontent.com/Lusca-LJ12/dados-como-esta/main/dados.json');
+                var dadosExistente = await response.json() || [];
+
+                // Adicionar novo nome à lista
+                dadosExistente.push({ nome: nomeUsuario, dataHora: new Date().toLocaleString() });
+
+                // Salvar dados atualizados no JSON no repositório central
+                await fetch('https://api.github.com/repos/Lusca-LJ12/dados-como-esta/contents/dados.json', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: 'Adicionando novo nome',
+                        content: btoa(JSON.stringify(dadosExistente)),
+                    }),
+                });
+
+                alert("Nome salvo com sucesso!");
+            } catch (error) {
+                console.error('Erro ao salvar nome:', error);
+                alert('Erro ao salvar nome. Por favor, tente novamente.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="formulario">
+        <h1>Bem-vindo!</h1>
+        <p>Antes de prosseguir, por favor, informe seu nome:</p>
+        <input type="text" id="nome" placeholder="Seu Nome">
+        <br>
+        <button onclick="salvarNomeEEnviar()">Salvar Nome</button>
+    </div>
+</body>
+</html>
