@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Nome e Direcionar</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #formulario {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        function obterNomeEProsseguir() {
+            var nomeUsuario = document.getElementById("nome").value;
+
+            if (nomeUsuario.trim() === "") {
+                alert("Por favor, insira seu nome antes de prosseguir.");
+                return;
+            }
+
+            localStorage.setItem("nomeUsuario", nomeUsuario);
+            window.location.href = "verificacao-bem-estar.html";
+        }
+    </script>
+</head>
+<body>
+    <div id="formulario">
+        <h1>Bem-vindo!</h1>
+        <p>Antes de prosseguir, por favor, informe seu nome:</p>
+        <input type="text" id="nome" placeholder="Seu Nome">
+        <br>
+        <button onclick="obterNomeEProsseguir()">Prosseguir</button>
+    </div>
+</body>
+</html>
