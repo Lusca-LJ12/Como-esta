@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação de Bem-Estar</title>
+
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column; /* Adicionado para alinhar verticalmente */
+            background-color: black; /* Cor de fundo preta */
+            color: #ffffff; /* Cor do texto branco para melhor contraste */
+        }
+
+        .question-container,
+        .button-container {
+            border: 2px solid white; /* Adiciona um contorno branco */
+            padding: 20px; /* Adiciona algum espaço interno */
+            border-radius: 10px; /* Adiciona bordas arredondadas */
+            margin-bottom: 20px; /* Adiciona algum espaço inferior */
+        }
+
+        button {
+            font-size: 24px; /* Aumentado o tamanho da fonte dos botões */
+            padding: 20px 40px; /* Aumentado o tamanho dos botões */
+            margin-top: 10px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .emoji {
+            font-size: 24px; /* Ajustando o tamanho do emoji */
+            margin-left: 10px; /* Distância do emoji à direita do botão */
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column; /* Alterado para coluna em telas menores */
+            align-items: center; /* Ajustado para centralizar horizontalmente */
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        function redirecionarParaWhatsApp(mensagem) {
+            window.location.href = "https://wa.me/5511913244247?text=" + encodeURIComponent(mensagem);
+        }
+
+        function conversarSobreAVida() {
+            var mensagem = "To suave, mas vamos conversar";
+            redirecionarParaWhatsApp(mensagem);
+        }
+
+        function tudoBemEstouAqui() {
+            var mensagem = "Sim Lucas, preciso desabafar... 😓";
+            redirecionarParaWhatsApp(mensagem);
+        }
+    </script>
+
+    <div class="question-container">
+        <h2>Você está bem?</h2>
+    </div>
+
+    <div class="button-container">
+        <button onclick="conversarSobreAVida()">Sim</button>
+        <span class="emoji">☝🏾</span>
+        <button onclick="tudoBemEstouAqui()">Não</button>
+        <span class="emoji">☝🏾</span>
+    </div>
+
+</body>
+</html>
