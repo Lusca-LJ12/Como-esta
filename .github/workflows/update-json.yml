@@ -14,4 +14,10 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Update JSON
-      run: echo '[{"nome": "Exemplo", "dataHora": "2024-01-20T12:00:00"}]' > dados.json
+      run: |
+        echo '[{"nome": "Exemplo", "dataHora": "2024-01-20T12:00:00"}]' > dados.json
+        curl -X PUT \
+          -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" \
+          -H "Content-Type: application/json" \
+          -d @dados.json \
+          "https://api.github.com/repos/Lusca-LJ12/Como-esta/contents/dados.json?ref=main"
