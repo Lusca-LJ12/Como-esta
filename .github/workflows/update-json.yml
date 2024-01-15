@@ -14,9 +14,4 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Update JSON
-      run: |
-        echo '[{"nome": "Exemplo", "dataHora": "2024-01-20T12:00:00"}]' > dados.json
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -am "Update JSON [skip ci]"
-        git push
+      run: echo '[{"nome": "Exemplo", "dataHora": "2024-01-20T12:00:00"}]' > dados.json
