@@ -1,0 +1,40 @@
+<script>
+    async function carregarListaUsuarios() {
+        try {
+            // Obter dados do JSON no repositório central
+            var response = await fetch('https://raw.githubusercontent.com/Lusca-LJ12/Nomes-Salvos/main/dados.json');
+            var listaUsuarios = await response.json() || [];
+
+            var listaUsuariosElement = document.getElementById("listaUsuarios");
+            listaUsuariosElement.innerHTML = "";
+
+            if (listaUsuarios.length > 0) {
+                listaUsuarios.forEach(function(usuario) {
+                    var usuarioDiv = document.createElement("div");
+                    usuarioDiv.className = "usuario-info";
+
+                    var nomeInfo = document.createElement("p");
+                    nomeInfo.textContent = "Nome: " + usuario.nome;
+
+                    var dataHoraInfo = document.createElement("p");
+                    dataHoraInfo.textContent = "Data e Hora: " + usuario.dataHora;
+
+                    usuarioDiv.appendChild(nomeInfo);
+                    usuarioDiv.appendChild(dataHoraInfo);
+
+                    listaUsuariosElement.appendChild(usuarioDiv);
+                });
+
+            } else {
+                listaUsuariosElement.innerHTML = "<p>Nenhuma informação salva ainda.</p>";
+            }
+
+        } catch (error) {
+            console.error('Erro ao carregar lista de usuários:', error);
+            alert('Erro ao carregar lista de usuários. Por favor, tente novamente.');
+        }
+    }
+
+    // Carregar lista de usuários ao carregar a página
+    window.onload = carregarListaUsuarios;
+</script>
