@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nomes Colocados</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .usuario-info {
+            border: 2px solid white;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+            max-width: 300px;
+            margin: 0 auto;
+            opacity: 1;
+            transition: opacity 1s ease-in-out; /* Aumentei o tempo da transição para 1 segundo */
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        function excluirUsuario(index) {
+            // Obter a lista de usuários do armazenamento local
+            var listaUsuarios = JSON.parse(localStorage.getItem("listaUsuarios")) || [];
+
+            // Remover o usuário pelo índice
+            listaUsuarios.splice(index, 1);
+
+            // Salvar a lista atualizada no armazenamento local
+            localStorage.setItem("listaUsuarios", JSON.stringify(listaUsuarios));
+
+            // Atualizar a lista na página
+            exibirListaUsuarios();
+        }
+
+        function exibirListaUsuarios() {
+            // Obter a lista de usuários do armazenamento local
+            var listaUsuarios = JSON.parse(localStorage.getItem("listaUsuarios")) || [];
+
+            // Exibir as informações na página
+            var listaUsuariosElement = document.getElementById("listaUsuarios");
+            listaUsuariosElement.innerHTML = "";
+
+            if (listaUsuarios.length > 0) {
+                listaUsuarios.forEach(function(usuario, index) {
+                    var usuarioDiv = document.createElement("div");
+                    usuarioDiv.className = "usuario-info";
+
+                    var nomeInfo = document.createElement("p");
+                    nomeInfo.textContent = "Nome: " + usuario.nome;
+
+                    var dataHoraInfo = document.createElement("p");
+                    dataHoraInfo.textContent = "Data e Hora: " + usuario.dataHora;
+
+                    // Adicionar botão de exclusão
+                    var deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Excluir";
+                    deleteButton.onclick = function() {
+                        excluirUsuario(index);
+                    };
+
+                    usuarioDiv.appendChild(nomeInfo);
+                    usuarioDiv.appendChild(dataHoraInfo);
+                    usuarioDiv.appendChild(deleteButton);
+                    
+                    listaUsuariosElement.appendChild(usuarioDiv);
+                });
+
+                // Adicionar uma classe para iniciar a transição de fade-out suave
+                listaUsuariosElement.classList.add('fade-out');
+
+                // Remover a classe após a transição para permitir futuras atualizações
+                setTimeout(function() {
+                    listaUsuariosElement.classList.remove('fade-out');
+                }, 1000); // Tempo da transição (1 segundo)
+            } else {
+                listaUsuariosElement.innerHTML = "<p>Nenhuma informação salva ainda.</p>";
+            }
+        }
+
+        // Atualizar a lista automaticamente a cada 2 segundos
+        setInterval(exibirListaUsuarios, 2000);
+
+        // Chamar a função ao carregar a página
+        window.onload = exibirListaUsuarios;
+    </script>
+</head>
+<body>
+    <h1>Informações Salvas</h1>
+    
+    <div id="listaUsuarios"></div>
+</body>
+</html>
